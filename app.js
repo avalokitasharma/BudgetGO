@@ -345,20 +345,24 @@ var controller = (function(budgetctrl, UIctrl){
 
 		var itemID, splitID, type, id;
 		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+		
+		//if id exists
+		if(itemID){
+			splitID = itemID.split('-');
+			type = splitID[0];
+			id = parseInt(splitID[1]);
 
-		splitID = itemID.split('-');
-		type = splitID[0];
-		id = parseInt(splitID[1]);
+			// delete item from data structure
+			budgetctrl.deleteItem(type, id);
 
-		// delete item from data structure
-		budgetctrl.deleteItem(type, id);
+			// delete item from UI
+			UIctrl.deleteListItem(itemID);
 
-		// delete item from UI
-		UIctrl.deleteListItem(itemID);
-
-		//update and show budget
-		updateBudget();
-		updatePercentage();
+			//update and show budget
+			updateBudget();
+			updatePercentage();
+		}
+		
 	}
 
 	return {
